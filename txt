@@ -1,0 +1,66 @@
+cardArray.sort(() => 0.5 - Math.random())
+
+const grid = document.getElementById('grid')
+const result = document.getElementById('result')
+let cardsChosen = []
+let cardsChosenId = []
+let cardsWon = []
+
+//create your board
+function createBoard() {
+  for (let i = 0; i < cardArray.length; i++) {
+    const card = document.createElement('img')
+    card.setAttribute('src', 'images/blank.png')
+    card.setAttribute('data-id', i)
+    card.addEventListener("click", flip)
+    grid.appendChild(card)
+  }
+}
+
+
+function checkForMatch () {
+const cards = document.querySelectorAll('img')
+
+ let optionOne = cardsChosenId[0];
+ let optionTwo = cardsChosenId[1];
+
+ if (optionOne == optionTwo) {
+    cards[optionOne].setAttribute('src', 'images/blank.png');
+    cards[optionTwo].setAttribute('src', 'images/blank.png');
+    alert("es la misma imagen");
+ }
+ else if (cardsChosen[0] === cardsChosen[1]){
+    cards[optionOne].setAttribute('src', 'images/white.png')
+    cards[optionTwo].setAttribute('src', 'images/white.png')
+    cards[optionOne].removeEventListener('click', flip)
+    cards[optionTwo].removeEventListener('click', flip)
+    alert("elegiste 2 que coinciden bien, segui asi")
+    cardsWon.push(cardsChosen)
+    console.log(cardsChosen)
+ }
+ else{
+    cards[optionOne].setAttribute('src', 'images/blank.png');
+    cards[optionTwo].setAttribute('src', 'images/blank.png');
+    alert("no elegiste bien puto")
+ }
+ cardsChosen = []
+ cardsChosenId = []
+ if  (cardsWon.length === cardArray.length/2) {
+    result.textContent = 'Congratulations! You found them all!'
+  }
+}
+
+function flip(){
+ var cardID = this.getAttribute("data-id")
+ cardsChosen.push(cardArray[cardID].name)
+ cardsChosenId.push(cardID)
+ this.src = cardArray[cardID].img
+ if (cardsChosen.length == 2){
+    setTimeout(checkForMatch, 200)
+ }
+}
+
+
+
+  createBoard()
+})
