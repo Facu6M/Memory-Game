@@ -97,6 +97,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
       if(cardsWon.length === cardArray.length/2){
+          confetti({
+          particleCount: 200,
+          spread: 180
+        })
         result.textContent = 'Congratulations! You found them all!'
       }
       cardsChoosen = [];
